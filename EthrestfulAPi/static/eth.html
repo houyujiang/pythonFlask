@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>Eth</title>
+
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <!-- HTML5 shim 和 Respond.js 是为了让 IE8 支持 HTML5 元素和媒体查询（media queries）功能 -->
+    <!-- 警告：通过 file:// 协议（就是直接将 html 页面拖拽到浏览器中）访问页面时 Respond.js 不起作用 -->
+    <!--[if lt IE 9]>
+    <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->
+    <![endif]-->
+</head>
+<script type="text/javascript">
+    //动态刷新
+    setInterval("myInterval()", 1000);//1000为1秒钟
+    function myInterval() {
+        myfunction();
+    }
+    window.onload = myfunction;
+    function myfunction() {
+
+        $.ajax({
+            type: "GET",
+            url: "http://127.0.0.1:5000/getrealprice",
+            cache: false,
+            async: false,
+            dataType: "json",
+            success: function (data, textStatus, jqXHR) {
+                //console.log(data.response);
+                market = data.response["market"];
+                sell1Price = data.response["sell1Price"];
+                hightPrice = data.response["hightPrice"];
+                lastPrice = data.response["lastPrice"];
+                vol = data.response["vol"];
+                riseRate = data.response["riseRate"]
+                //$("#0").text(market);
+                $("#1").text(sell1Price);
+                $("#2").text(hightPrice);
+                $("#3").text(lastPrice);
+                $("#4").text(vol);
+                $("#5").text(riseRate);
+
+            }
+        })
+    };
+
+</script>
+<body>
+<div class="row">
+        <div class=" col-xs-12  ">
+            <table class="table col-xs-6 "  id="tabletest">
+                <thead>
+                <tr>
+                    <th>币种</th>
+                    <th>实时价格</th>
+                    <th>24小时最高价格</th>
+                    <th>24小时最低价格</th>
+                    <th>成交量</th>
+                    <th>24H涨跌幅</th>
+
+                </tr>
+                </thead>
+                <tbody id="tr">
+                <tr>
+                    <td><span class="label label-success" id="0">eth/rmb</span></td>
+                    <td><span class="label label-warning" id="1"></span></td>
+                    <td><span class="label label-warning" id="2"></span></td>
+                    <td><span class="label label-warning" id="3"></span></td>
+                    <td><span class="label label-warning" id="4"></span></td>
+                    <td><span class="label label-warning" id="5"></span></td>
+                </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+</div>
+
+
+
+
+</body>
+</html>
